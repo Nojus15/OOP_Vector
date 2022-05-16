@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <assert.h>
+#include <memory>
+#include <stdexcept>
+#include <limits>
 
 using std::cout;
 using std::endl;
@@ -8,7 +11,7 @@ using std::endl;
 template <typename T>
 class Vector
 {
-private:
+public:
     typedef T value_type;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
@@ -64,8 +67,10 @@ public:
     }
     ~Vector()
     {
+        for (iterator it = begin(); it != end(); it++)
+            it->~T();
+        //     delete it;
         delete[] v_Data;
-        cout << "destroyed" << endl;
     };
     void assign(size_type count, const value_type &value)
     {
@@ -191,8 +196,11 @@ public:
 
     void clear()
     {
-        std::destroy(begin(), end());
+        for (iterator it = begin(); it != end(); it++)
+            it->~T();
+        // delete it;
         v_size = 0;
+        // delete[] v_Data;
     }
     iterator insert(iterator pos, const_reference value)
     {

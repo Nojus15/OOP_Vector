@@ -29,6 +29,8 @@ private:
     bool paz;
     bool manual;
 
+    int realocations = 0;
+
 public:
     Application();
     ~Application();

@@ -45,8 +45,8 @@ public:
         this->v_size = other.v_size;
         this->v_capacity = other.v_capacity;
         this->v_Data = new value_type[v_size];
-        for (size_type i = 0; i < v_size; i++)
-            v_Data[i] = std::move(other.v_Data[i]);
+        v_Data = other.v_Data;
+        other.v_Data = nullptr;
     }
     Vector(std::initializer_list<value_type> ilist)
     {
@@ -61,16 +61,13 @@ public:
         this->v_size = other.v_size;
         this->v_capacity = other.v_capacity;
         this->v_Data = new value_type[v_size];
-        for (size_type i = 0; i < v_size; i++)
-            v_Data[i] = std::move(other.v_Data[i]);
+        std::copy(other.begin(), other.end(), v_Data);
         return *this;
     }
     ~Vector()
     {
-        for (iterator it = begin(); it != end(); it++)
-            it->~T();
-        //     delete it;
-        delete[] v_Data;
+        clear();
+        ::operator delete(v_Data, v_capacity * sizeof(T));
     };
     void assign(size_type count, const value_type &value)
     {
@@ -196,11 +193,12 @@ public:
 
     void clear()
     {
-        for (iterator it = begin(); it != end(); it++)
-            it->~T();
-        // delete it;
-        v_size = 0;
-        // delete[] v_Data;
+        if (v_Data)
+        {
+            for (size_type i = 0; i < v_size; i++)
+                v_Data[i].~T();
+            v_size = 0;
+        }
     }
     iterator insert(iterator pos, const_reference value)
     {
@@ -305,7 +303,7 @@ public:
     {
         if (v_size >= v_capacity)
             ReAlloc(v_capacity * 2);
-        v_Data[v_size++] = val;
+        new (&v_Data[v_size++]) T(val);
     }
     void push_back(value_type &&val)
     {
@@ -423,11 +421,13 @@ public:
 private:
     void ReAlloc(size_type newCapacity)
     {
-        v_capacity = newCapacity;
-        T *newData = new T[newCapacity];
+        T *newData = (T *)::operator new(newCapacity * sizeof(T));
         for (size_type i = 0; i < v_size; i++)
-            newData[i] = std::move(v_Data[i]);
-        delete[] v_Data;
+            new (&newData[i]) T(v_Data[i]);
+        for (size_type i = 0; i < v_size; i++)
+            v_Data[i].~T();
+        ::operator delete(v_Data, v_capacity * sizeof(T));
+        v_capacity = newCapacity;
         v_Data = newData;
     }
 };

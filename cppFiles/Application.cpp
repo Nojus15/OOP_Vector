@@ -94,9 +94,10 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
 
     open_f.close();
     std::getline(my_buffer, line);
-
     while (my_buffer)
     {
+        if (studentai.size() == studentai.capacity())
+            realocations++;
         std::getline(my_buffer, line);
         if (line.length() == 0)
             break;
@@ -112,6 +113,7 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
         t.setEgz(t.get_popMark());
         studentai.push_back(t);
     }
+    cout << "Reallocations: " << realocations << endl;
     cout << "Failo skaitymas uztruko: " << otherTimer.Stop_Return() << " s" << endl;
 }
 void Application::bufer_read_students(list<Studentas> &studentai)
@@ -406,7 +408,6 @@ void Application::runAutoMode()
         containerToFile("kietiakai.txt", kietiakai);
         containerToFile("vargsai.txt", vargsai);
         cout << "Surusiuotu studentu isvedimas i naujus failus uztruko: " << otherTimer.Stop_Return() << endl;
-        cout << "end of if" << endl;
     }
     else if (container_type == 2)
     {

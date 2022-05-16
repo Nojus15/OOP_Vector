@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 #include <assert.h>
-#include <memory>
-#include <stdexcept>
 #include <limits>
 
 using std::cout;
@@ -431,7 +429,3 @@ private:
         v_Data = newData;
     }
 };
-
-// nuo erase
-// reik patikrint emplace
-// parasyti paskutini inserta su initializer list

@@ -63,23 +63,4 @@ Size:  Capacity:  Ratio:
 
 Final size: 100, capacity: 128
 ### shrink_to_fit() test
-Std vector
-Default-constructed capacity is 0
-Capacity of a 100-element vector is 100
-Capacity after resize(50) is 100
-Capacity after shrink_to_fit() is 50
-Capacity after clear() is 50
-Capacity after shrink_to_fit() is 0
-Capacity after adding 300 elements is 512
-Capacity after shrink_to_fit() is 300
-
-My vector
-Default-constructed capacity is 0
-Capacity of a 100-element vector is 100
-Capacity after resize(50) is 100
-Capacity after shrink_to_fit() is 50
-Capacity after clear() is 50
-Capacity after shrink_to_fit() is 0
-Capacity after adding 300 elements is 512
-Capacity after shrink_to_fit() is 300
-
+image.png

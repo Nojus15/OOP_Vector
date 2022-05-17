@@ -26,10 +26,7 @@ private:
     size_type v_capacity = 0;
 
 public:
-    Vector()
-    {
-        ReAlloc(2);
-    };
+    Vector(){};
     Vector(const Vector &other)
     {
         this->v_size = other.v_size;
@@ -62,6 +59,25 @@ public:
         std::copy(other.begin(), other.end(), v_Data);
         return *this;
     }
+    Vector &operator=(Vector &&other)
+    {
+        if (other == this)
+            return *this;
+        this->v_size = other.v_size;
+        this->v_capacity = other.v_capacity;
+        this->v_Data = new value_type[v_size];
+        this->v_Data = other.v_Data;
+        other.v_Data = nullptr;
+        return *this;
+    }
+    Vector &operator=(std::initializer_list<value_type> ilist)
+    {
+        ReAlloc(ilist.size());
+        v_size = ilist.size();
+        std::move(ilist.begin(), ilist.end(), v_Data);
+        return *this;
+    }
+
     ~Vector()
     {
         clear();
@@ -187,6 +203,7 @@ public:
     {
         if (v_size < v_capacity)
             ReAlloc(v_size);
+        v_capacity = v_size;
     }
 
     void clear()
@@ -195,8 +212,8 @@ public:
         {
             for (size_type i = 0; i < v_size; i++)
                 v_Data[i].~T();
-            v_size = 0;
         }
+        v_size = 0;
     }
     iterator insert(iterator pos, const_reference value)
     {
@@ -307,7 +324,7 @@ public:
     {
         if (v_size >= v_capacity)
             ReAlloc(v_capacity * 2);
-        v_Data[v_size++] = std::move(val);
+        new (&v_Data[v_size++]) T(val);
     }
     template <typename... Args>
     void emplace_back(Args &&...args)
@@ -328,17 +345,34 @@ public:
     {
         if (count < 0)
             throw std::invalid_argument("Invalid argument");
-        ReAlloc(count);
+        if (count > v_size)
+        {
+            ReAlloc(count);
+            for (size_type i = v_size; i < count; i++)
+                ::new (&v_Data[i]) T();
+        }
+        else if (count < v_size)
+        {
+            for (size_type i = count + 1; i <= v_size; i++)
+                v_Data[i].~T();
+        }
         v_size = count;
     }
     void resize(size_type count, const_reference value)
     {
         if (count < 0)
             throw std::invalid_argument("Invalid argument");
-        ReAlloc(count);
         if (count > v_size)
+        {
+            ReAlloc(count);
             for (size_type i = v_size; i < count; i++)
-                v_Data[i] = std::move(value);
+                ::new (&v_Data[i]) T(value);
+        }
+        else if (count < v_size)
+        {
+            for (size_type i = count + 1; i <= v_size; i++)
+                v_Data[i].~T();
+        }
         v_size = count;
     }
     void swap(Vector &other)
@@ -419,6 +453,8 @@ public:
 private:
     void ReAlloc(size_type newCapacity)
     {
+        if (newCapacity == 0)
+            newCapacity = 2;
         T *newData = (T *)::operator new(newCapacity * sizeof(T));
         for (size_type i = 0; i < v_size; i++)
             new (&newData[i]) T(v_Data[i]);

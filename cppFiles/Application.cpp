@@ -82,6 +82,8 @@ void Application::ivestis(Studentas &temp)
 
 void Application::bufer_read_students(Vector<Studentas> &studentai)
 {
+    int allocCounter = 0;
+
     std::string line;
     std::stringstream my_buffer;
 
@@ -96,6 +98,8 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
     std::getline(my_buffer, line);
     while (my_buffer)
     {
+        if (studentai.size() == studentai.capacity())
+            allocCounter++;
         std::getline(my_buffer, line);
         if (line.length() == 0)
             break;
@@ -111,6 +115,7 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
         t.setEgz(t.get_popMark());
         studentai.push_back(t);
     }
+    cout << "Atlikta atminties perskirstymu: " << allocCounter << endl;
     cout << "Failo skaitymas uztruko: " << otherTimer.Stop_Return() << " s" << endl;
 }
 void Application::bufer_read_students(list<Studentas> &studentai)

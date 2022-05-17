@@ -6,6 +6,10 @@
 | std::vector | 0 s      | 0.0239843 s | 0.213842 s   | 2.02593 s     |
 | Vector      | 0 s      | 0.0239825 s | 0.232263 s   | 1.99267 s     |
 
+### Perskirstymai uzpildants 100000000 elementu
+- std vector – 31
+- Vector – 30
+
 ### rbegin() test
 - Std vector
 - 16 8 4 2 1
@@ -63,3 +67,15 @@
 - Capacity after shrink_to_fit() is 0
 - Capacity after adding 300 elements is 512
 - Capacity after shrink_to_fit() is 300
+
+### Testavimas v2.0 uzduotyje su 100.000 studentu
+- std vector – 18
+- Vector – 17
+
+| Container              | std::vector  | Vector      |
+| :----------            | :-------     | :-------    |
+| Atminties perskirstymu | 18           | 17          |
+| Failo skaitymas        | 0.627489   s | 0.607803  s |
+| Studentu dalinima      | 0.0518088  s | 0.0505579 s |
+| Studentu isvedimas     | 0.20844    s | 0.204456  s |
+| Programos laikas       | 1.09528    s | 1.06645   s |

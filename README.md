@@ -69,8 +69,6 @@
 - Capacity after shrink_to_fit() is 300
 
 ### Testavimas v2.0 uzduotyje su 100.000 studentu
-- std vector – 18
-- Vector – 17
 
 | Container              | std::vector  | Vector      |
 | :----------            | :-------     | :-------    |

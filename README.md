@@ -31,37 +31,18 @@
 - 
 - My vector
 - Maximum size of a std::vector is 9223372036854775807
-### capacity() test
+### end() test
 - Std vector
-- Initial size: 0, capacity: 0
-- 
-- Demonstrate the capacity's growth policy.
-- Size:  Capacity:  Ratio:
-- 1      1          inf
-- 2      2          2
-- 3      4          2
-- 5      8          2
-- 9      16         2
-- 17     32         2
-- 33     64         2
-- 65     128        2
-- 
-- Final size: 100, capacity: 128
+- 1 2 4 8 16
+- Sum of nums: 31
+- First fruit: orange
+- vector 'empty' is indeed empty.
 - 
 - My vector
-- Initial size: 0, capacity: 0
-- 
-- Demonstrate the capacity's growth policy.
-- Size:  Capacity:  Ratio:
-- 1      2          inf
-- 3      4          2
-- 5      8          2
-- 9      16         2
-- 17     32         2
-- 33     64         2
-- 65     128        2
-
-- Final size: 100, capacity: 128
+- 1 2 4 8 16
+- Sum of nums: 31
+- First fruit: orange
+- vector 'empty' is indeed empty.
 ### shrink_to_fit() test
 - Std vector
 - Default-constructed capacity is 0

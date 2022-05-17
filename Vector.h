@@ -47,6 +47,8 @@ public:
     {
         ReAlloc(ilist.size());
         v_size = ilist.size();
+        for (size_type i = 0; i < v_size; i++)
+            ::new (&v_Data[i]) T();
         std::move(ilist.begin(), ilist.end(), v_Data);
     }
     Vector &operator=(const Vector &other)

@@ -164,6 +164,7 @@ void test_begin()
 }
 void test_end()
 {
+    cout << "Std vector" << endl;
     std::vector<int> nums{1, 2, 4, 8, 16};
     std::vector<std::string> fruits{"orange", "apple", "raspberry"};
     std::vector<char> empty;
@@ -481,12 +482,11 @@ int main()
     // cout << "Allocations: " << reallocCounter << endl;
 
     cout << endl;
-
     // test_rbegin();
-    test_size();
-    test_max_size();
-    test_capacity();
-    test_shrink_to_fit();
+    // test_size();
+    // test_max_size();
+    test_end();
+    // test_shrink_to_fit();
 
     cout << endl;
 }

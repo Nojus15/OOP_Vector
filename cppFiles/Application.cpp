@@ -111,7 +111,6 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
         t.setEgz(t.get_popMark());
         studentai.push_back(t);
     }
-    cout << "Reallocations: " << realocations << endl;
     cout << "Failo skaitymas uztruko: " << otherTimer.Stop_Return() << " s" << endl;
 }
 void Application::bufer_read_students(list<Studentas> &studentai)

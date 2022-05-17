@@ -63,4 +63,4 @@ Size:  Capacity:  Ratio:
 
 Final size: 100, capacity: 128
 ### shrink_to_fit() test
-image.png
+![Screenshot](image.png)

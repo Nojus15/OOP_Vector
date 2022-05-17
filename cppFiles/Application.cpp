@@ -96,8 +96,6 @@ void Application::bufer_read_students(Vector<Studentas> &studentai)
     std::getline(my_buffer, line);
     while (my_buffer)
     {
-        if (studentai.size() == studentai.capacity())
-            realocations++;
         std::getline(my_buffer, line);
         if (line.length() == 0)
             break;
